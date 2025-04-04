@@ -1,8 +1,11 @@
-FROM golang:1.24.2 as builder
+FROM golang:1.24.2
+ 
+RUN mkdir /app
+ 
+COPY . /app
+ 
 WORKDIR /app
-COPY . .
-RUN go build -o server .
-
-FROM alpine
-COPY --from=builder /app/server /server
-CMD ["/server"]
+ 
+RUN go build -o server . 
+ 
+CMD [ "/app/server" ]
